@@ -9,9 +9,9 @@
 template <typename Type>
 class Node{
 public:
-    Node(double value);
+    Node();
     ~Node();
-    Type value = 0;
+    Type value;
     Node* next = nullptr;
     Node* pre = nullptr;
 };
@@ -26,6 +26,7 @@ public:
     ~List();
     Type getValue(int pos);
     bool insert(int pos, Type value);
+    bool is_empty();
     Type remove(int pos);
     void _print();
 };
@@ -37,19 +38,15 @@ public:
     Type pop();
 };
 
-class Tree{
-    public:
-    Tree();
-    ~Tree();
-    Tree* left_child = nullptr;
-    Tree* right_child = nullptr;
-    int value = 0;
-};
+template <typename Type>
+bool List<Type>::is_empty(){
+    return head->next == tail;
+}
 
 template <typename Type>
 List<Type>::List(){
-    head = (Node<Type>*)malloc(sizeof(Node<Type>));
-    tail = (Node<Type>*)malloc(sizeof(Node<Type>));
+    head = new Node<Type>();
+    tail = new Node<Type>();
     head->next = tail;
     tail->pre = head;
     p = head;
@@ -59,11 +56,11 @@ template <typename Type>
 List<Type>::~List(){
     p = head->next;
     while(p = p->next){
-        free(head->next);
+        delete head->next;
         head->next = p;
     }
-    free(head);
-    free(tail);
+    delete head;
+    delete tail;
 }
 
 template <typename Type>
@@ -103,7 +100,7 @@ bool List<Type>::insert(int pos, Type value){
         }
     }
     if(p){
-        Node<Type>* newnode = (Node<Type>*)malloc(sizeof(Node<Type>));
+        Node<Type>* newnode = new Node<Type>();
         newnode->value = value;
         newnode->pre = p;
         newnode->next = p->next;
@@ -131,7 +128,7 @@ Type List<Type>::remove(int pos){
         p->pre->next = p->next;
         p->next->pre = p->pre;
         double reDate = p->value;
-        free(p);
+        delete p;
         return reDate;
     }
     else
@@ -155,4 +152,13 @@ template <typename Type>
 Type Stack<Type>::pop(){
     return remove(-1);
 }
+
+template <typename Type>
+Node<Type>::Node(){
+    next = nullptr;
+    pre = nullptr;
+    value = NULL;
+}
+
+
 #endif

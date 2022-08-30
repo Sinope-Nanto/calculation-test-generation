@@ -18,7 +18,7 @@ int operator_rank(char _operator){
     case ')':
         return 10;
     default:
-        return -1;
+        return 999;
     }
 }
 bool in(char c, char* str){
