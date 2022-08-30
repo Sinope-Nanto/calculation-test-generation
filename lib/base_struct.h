@@ -145,12 +145,12 @@ void List<Type>::_print(){
 
 template <typename Type>
 bool Stack<Type>::push(Type value){
-    return insert(-1, value);
+    return this->insert(-1, value);
 }
 
 template <typename Type>
 Type Stack<Type>::pop(){
-    return remove(-1);
+    return this->remove(-1);
 }
 
 template <typename Type>
