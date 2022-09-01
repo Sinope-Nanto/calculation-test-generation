@@ -10,6 +10,8 @@ public:
     TreeNode* rightChild = nullptr;
     char* value;
     char* get_str(); 
+    double get_value();
+    TreeNode* removeN();
     int slen;
 };
 

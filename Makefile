@@ -1,10 +1,11 @@
 .PHONY : clean all
-all: dir basestruct test
+all: dir lib test
 dir:
 	mkdir obj
-test: dir basestruct
-	g++ -g obj/test.o -o obj/test
-basestruct: dir
+test: dir lib
+	g++ -g obj/test.o obj/lib.o -o obj/test
+lib: dir
 	g++ -g -c test.cpp -o obj/test.o -I lib/
+	g++ -g -c src/tree.cpp -o obj/lib.o -I lib/
 clean:
 	rm -rf obj

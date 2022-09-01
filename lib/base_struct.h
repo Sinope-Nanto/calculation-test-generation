@@ -5,6 +5,7 @@
 #include <stdexcept>
 #include <stdio.h>
 #include <iostream>
+#include <type_traits>
 
 template <typename Type>
 class Node{
@@ -29,6 +30,8 @@ public:
     bool is_empty();
     Type remove(int pos);
     void _print();
+    void _immRemove();
+    void _immInsertBeforePoint(Type value);
 };
 
 template <typename Type>
@@ -41,6 +44,23 @@ public:
 template <typename Type>
 bool List<Type>::is_empty(){
     return head->next == tail;
+}
+
+template <typename Type>
+void List<Type>::_immRemove(){
+        p->pre->next = p->next;
+        p->next->pre = p->pre;
+        delete p;
+}
+
+template <typename Type>
+void List<Type>::_immInsertBeforePoint(Type value){
+    Node<Type>* newnode = new Node<Type>();
+    newnode->value = value;
+    newnode->pre = p->pre;
+    newnode->next = p;
+    p->pre->next = newnode;
+    p->pre = newnode;
 }
 
 template <typename Type>
@@ -73,7 +93,7 @@ Type List<Type>::getValue(int pos){
     else{
         pos = -pos;
         p = tail;
-        while((p = p->pre) && pos)
+        while(pos && (p = p->pre))
             pos--;
     }
     if(p && p->next && p->pre)
@@ -124,10 +144,14 @@ Type List<Type>::remove(int pos){
         while((p = p->pre) && pos)
             pos--;
     }
+    // 此处会造成内存泄露
     if(p && p->next && p->pre){
         p->pre->next = p->next;
         p->next->pre = p->pre;
-        double reDate = p->value;
+        // if(std::is_pointer<Type>()){
+
+        // }
+        Type reDate = p->value;
         delete p;
         return reDate;
     }
@@ -160,5 +184,15 @@ Node<Type>::Node(){
     value = NULL;
 }
 
+template <typename Type>
+Node<Type>::~Node(){
+    // try{
+    //     delete value;
+    // }
+    // catch(const std::exception& e){
+    //     return;
+    // }
+    // return;  
+}
 
 #endif
