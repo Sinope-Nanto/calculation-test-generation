@@ -96,12 +96,14 @@ reRand:
     else{
         if(target >= 500)
             goto reRand;
+rediv:
         if(rand()%4 < 3){
             rightnum = rand()%10 + 1;
         }
         else{
             rightnum = rand()%20 + 1;
         }
+        if(rightnum == 1) goto rediv;
         leftnum = target*rightnum;
         typeOpera = '/';        
     }
@@ -143,7 +145,7 @@ char* generateExper(int target, int max_depth){
 }
 
 char* getIntExpression(int* answer, int max_depth){
-    int randint = rand()%10000;
+    int randint = rand()%1000;
     *answer = randint;
     return removeParentheses(generateExper(*answer, max_depth));
 }
