@@ -7,13 +7,13 @@
 #include <stdexcept>
 #include <stdlib.h>
 #include "tree.h"
-List<char*>* _notation2List(char* notation);
+List<char*>* _notation2List(const char* notation);
 TreeNode* load2Tree(List<char*>* expression);
 List<char*>* _negative_number_process(List<char*>* expression);
 char* _resume_negative_number(char* expression);
 char* removeParentheses(char* expression);
 
-List<char*>* _notation2List(char* notation){
+List<char*>* _notation2List(const char* notation){
     int left = 0;
     int right = 0;
     List<char*>* symbol = new List<char*>();
@@ -150,7 +150,7 @@ char* _resume_negative_number(char* expression){
     int j = 1;
     for(; j < length; ++i,++j)
         if(expression[i] == '0' && expression[j] == '-')
-            memcpy(expression + i, expression + j, length - i);
+            memcpy(expression + i, expression + j, length + 1 - i);
     return expression;
 }
 

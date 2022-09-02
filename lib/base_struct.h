@@ -144,13 +144,9 @@ Type List<Type>::remove(int pos){
         while((p = p->pre) && pos)
             pos--;
     }
-    // 此处会造成内存泄露
     if(p && p->next && p->pre){
         p->pre->next = p->next;
         p->next->pre = p->pre;
-        // if(std::is_pointer<Type>()){
-
-        // }
         Type reDate = p->value;
         delete p;
         return reDate;
