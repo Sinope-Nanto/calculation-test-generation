@@ -53,7 +53,7 @@ int* recursionGenerateExper(int target, int depth, int max_depth, int* length){
     int typeOpera;
 reRand:
     int randint = rand()%100;
-    if(randint < possible_end){
+    if(randint < possible_end || !target){
         *length = 1;
         result = new int[1];
         result[0] = target;
@@ -69,7 +69,7 @@ reRand:
         leftnum = rand()%(target * 2) - (target >> 1);
         if(leftnum == target || !leftnum) goto reRand;
         rightnum = leftnum - target;
-        typeOpera = '-';        
+        typeOpera = '-';     
     }
     // 此处需要后续修改
     else if(randint < 75 + possible_end/4){
@@ -96,16 +96,14 @@ reRand:
     else{
         if(target >= 500)
             goto reRand;
-rediv:
         if(rand()%4 < 3){
-            rightnum = rand()%10 + 1;
+            rightnum = rand()%10 + 2;
         }
         else{
-            rightnum = rand()%20 + 1;
+            rightnum = rand()%20 + 2;
         }
-        if(rightnum == 1) goto rediv;
         leftnum = target*rightnum;
-        typeOpera = '/';        
+        typeOpera = '/';   
     }
     int leftLength, rightLength;
     int* lEx = recursionGenerateExper(leftnum, depth + 1, max_depth, &leftLength);
@@ -141,6 +139,7 @@ char* generateExper(int target, int max_depth){
         }
     } 
     re[point] = '\0';
+    delete[] expression;
     return re;
 }
 

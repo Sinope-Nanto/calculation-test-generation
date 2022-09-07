@@ -149,7 +149,7 @@ char* _resume_negative_number(char* expression){
     int i = 0;
     int j = 1;
     for(; j < length; ++i,++j)
-        if(expression[i] == '0' && expression[j] == '-')
+        if((expression[i] == '0' && expression[j] == '-') && (!i || (i && (expression[i - 1] > '9' || expression[i - 1] < '0'))))
             memcpy(expression + i, expression + j, length + 1 - i);
     return expression;
 }
